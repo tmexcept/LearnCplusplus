@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 # TODO 第二步：引入库文件
 #link_directories("本地库文件地址")
 
-add_executable(LearnCplusplus #[[test.cpp]] main.cpp)
+add_executable(LearnCplusplus #[[test.cpp]] main.cpp point_about.cpp)
 
 # TODO 第三步：链接到目标库  必须增加：pthreadVC2
 #target_link_libraries(目标库名字 pthreadVC2)
