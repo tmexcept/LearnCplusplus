@@ -10,6 +10,7 @@
 class point_about {
 public:
     void testConstPoint();
+    void testPointAdd();
     void testModifyArgument();
     void initPoint();
 };
