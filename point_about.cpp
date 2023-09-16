@@ -32,6 +32,38 @@ void point_about::testPointAdd(){
     **ptr=34;//*ptr的结果是ptr所指向的东西，在这里是一个指针，对这个指针再做一次*运算，结果就是一个int类型的变量。
     printf("a1=%d,  p1=%d, *p1=%d\n", a1, p1, *p1);
     printf("*prt=%d,  **prt=%d\n", *ptr, **ptr);
+
+
+    char *arr[20] = {a, a, a};
+    char **parr=arr;//如果把arr看作指针的话，arr也是指针表达式
+    char *str;
+    str=*parr;//*parr是指针表达式
+    str=*(parr+1);//*(parr+1)是指针表达式
+    str=*(parr+2);//*(parr+2)是指针表达式
+
+
+    int array[10]={0,1,2,3,4,5,6,7,8,9},value;
+    value=array[0];//也可写成：value=*array;
+    value=array[3];//也可写成：value=*(array+3);
+    value=array[4];//也可写成：value=*(array+4);
+
+    int value1 = *array + 5;
+    printf("value=%d,  value1=%d\n", value, value1);
+
+
+    //ptr2是一个指针，它的类型是int (*)[10]，他指向的类型是int [10]，我们用整个数组的首地址来初始化它。
+    // 在语句ptr=&array中，array代表数组本身。
+    int array2[10];
+    int (*ptr2)[10];
+    ptr2=&array2;
+//    则在32位程序中，有：
+//    sizeof(int(*)[10])==4
+//    sizeof(int [10])==40
+//    sizeof(ptr)==4
+//    实际上，sizeof(对象)测出的都是对象自身的类型的大小，而不是别的什么类型的大小
+
+    int *ptr3[10];
+
 }
 
 //todo 常量指针说的是不能通过这个指针改变变量的值，但是还是可以通过其他的引用来改变变量的值的
@@ -219,4 +251,30 @@ void point_test_function_reference()
 
     mydisplay.init();
     mydisplay.fill_screen(0xfff);
+}
+
+
+struct MyStruct
+{
+    int a;
+    int b;
+    int c;
+};
+
+void testPoint2Struct(){
+
+    MyStruct ss={20,30,40};//声明了结构对象ss，并把ss的三个成员初始化为20，30和40。
+    MyStruct *ptr=&ss;//声明了一个指向结构对象ss的指针。它的类型是MyStruct*,它指向的类型是MyStruct。
+    int *pstr=(int*)&ss;//声明了一个指向结构对象ss的指针。但是它的类型和它指向的类型和ptr是不同的。
+//请问怎样通过指针ptr来访问ss的三个成员变量？
+    ptr->a;
+    ptr->b;
+    ptr->c;
+//    又请问怎样通过指针pstr来访问ss的三个成员变量？
+
+    *pstr;//访问了ss的成员a。
+    *(pstr+1);//访问了ss的成员b。
+    *(pstr+2);//访问了ss的成员c。
+    //此中指针访问 struct 的方式不正规，在存放结构对象的各个成员时，在某种编译环境下，可能会需要字对齐或双字对齐或者是别的什么对齐，
+    // 需要在相邻两个成员之间加若干个“填充字节”，这就导致各个成员之间可能会有若干个字节的空隙。
 }

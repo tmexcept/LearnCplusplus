@@ -18,5 +18,6 @@ public:
 void void_reference_test();
 void structCast();
 void point_test_function_reference();
+void testPoint2Struct();
 
 #endif //LEARNCPLUSPLUS_POINT_ABOUT_H
