@@ -27,11 +27,14 @@ void point_about::testPointAdd(){
     p1=&a1;//&a的结果是一个指针，类型是int*，指向的类型是int，指向的地址是a的地址。
     *p1=24;//*p的结果，在这里它的类型是int，它所占用的地址是p所指向的地址，显然，*p就是变量a。
     printf("a1=%d,  p1=%d, *p1=%d\n", a1, p1, *p1);
+
     ptr=&p1;//&p的结果是个指针，该指针的类型是p的类型加个*，在这里是int**。该指针所指向的类型是p的类型，这里是int*。该指针所指向的地址就是指针p自己的地址。
-    *ptr=&b;//*ptr是个指针，&b的结果也是个指针，且这两个指针的类型和所指向的类型是一样的，所以?amp;b来给*ptr赋值就是毫无问题的了。
-    **ptr=34;//*ptr的结果是ptr所指向的东西，在这里是一个指针，对这个指针再做一次*运算，结果就是一个int类型的变量。
-    printf("a1=%d,  p1=%d, *p1=%d\n", a1, p1, *p1);
-    printf("*prt=%d,  **prt=%d\n", *ptr, **ptr);
+//    *ptr=&b;//*ptr是个指针，&b的结果也是个指针，且这两个指针的类型和所指向的类型是一样的，所以?amp;b来给*ptr赋值就是毫无问题的了。
+//    **ptr=34;//*ptr的结果是ptr所指向的东西，在这里是一个指针，对这个指针再做一次*运算，结果就是一个int类型的变量。
+    printf("&p1=%d,  p1=%d, *p1=%d\n", &p1, p1, *p1);
+    printf("&prt=%d,  prt=%d,  *prt=%d,  **prt=%d\n", &ptr, ptr, *ptr, **ptr);
+    //                 &p11=-159384480,    p1=-159384472, *p1=24
+    //&prt=-159384488,  prt=-159384480,  *prt=-159384472,  **prt=24
 
 
     char *arr[20] = {a, a, a};
@@ -277,4 +280,31 @@ void testPoint2Struct(){
     *(pstr+2);//访问了ss的成员c。
     //此中指针访问 struct 的方式不正规，在存放结构对象的各个成员时，在某种编译环境下，可能会需要字对齐或双字对齐或者是别的什么对齐，
     // 需要在相邻两个成员之间加若干个“填充字节”，这就导致各个成员之间可能会有若干个字节的空隙。
+}
+
+// TODO  =========================== [引用的本质就是指针]
+// TODO 指针 互相换两个数
+void changeNumber(int *n1, int *n2) {
+    int temp = *n1;
+    *n1 = *n2;
+    *n2 = temp;
+}
+
+// TODO 引用 互相换两个数  [引用的本质就是指针]
+void changeNumber2(int & n1, int & n2) { // 隐式：int * n1, int * n2
+    int temp = n1; // int temp = *n1;
+    n1 = n2; //  *n1 = *n2;
+    n2 = temp; // *n2 = temp;
+}
+
+int testChangeNumber() {
+    int number1 = 100;
+    int number2 = 200;
+     changeNumber(&number1, &number2);
+    cout << number1 << " , " << number2 << endl;
+    // 我下面不需要去地址给他，为什么也可以，C、C++编译器 已经帮我们做了，所以无需写 &num 直接num
+    changeNumber2(number1, number2);
+    cout << number1 << " , " << number2 << endl;
+
+    return 0;
 }
